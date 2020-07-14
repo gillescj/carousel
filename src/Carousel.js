@@ -1,7 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const Container = styled.div``;
 
 const Carousel = () => {
-    return <div>Carousel</div>;
+    return <Container>Carousel</Container>;
 };
 
 export default Carousel;
