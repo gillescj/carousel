@@ -1,6 +1,8 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import CarouselContent from './CarouselContent';
+import { ReactComponent as ArrowLeftSVG } from '../assets/svgs/arrow-left.svg';
+import { ReactComponent as ArrowRightSVG } from '../assets/svgs/arrow-right.svg';
 
 const Container = styled.div`
     display: grid;
@@ -10,9 +12,12 @@ const Container = styled.div`
 `;
 
 const Overlay = styled.div`
+    display: grid;
+    justify-items: center;
     z-index: 2;
     grid-row: 1 /-1;
     grid-column: 1/-1;
+    grid-template-columns: 10% auto 10%;
 `;
 
 const InnerContent = styled.div`
@@ -21,11 +26,24 @@ const InnerContent = styled.div`
     grid-column: 1/-1;
 `;
 
-const Arrow = styled.button``;
+const Arrow = styled.button`
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border: none;
+    cursor: pointer;
+    &:hover {
+        background: hsla(100, 5%, 20%, 30%);
+    }
+    svg {
+        stroke: white;
+    }
+`;
 
 const DotsContainer = styled.div`
     display: flex;
     padding: 0.5rem;
+    align-self: end;
 `;
 
 const Dot = styled.div`
@@ -37,6 +55,9 @@ const Dot = styled.div`
     margin: 0.1rem;
     cursor: pointer;
     box-shadow: 0 2px 2px 0 hsla(206, 6%, 25%, 0.3);
+    &:hover {
+        background: hsl(190, 65%, 50%);
+    }
 `;
 
 const Carousel = ({ images }) => {
@@ -98,9 +119,13 @@ const Carousel = ({ images }) => {
     return (
         <Container ref={contentRef}>
             <Overlay>
-                <Arrow onClick={() => handleArrowClick('previous')}>Previous</Arrow>
-                <Arrow onClick={() => handleArrowClick('next')}>Next</Arrow>
+                <Arrow onClick={() => handleArrowClick('previous')}>
+                    <ArrowLeftSVG />
+                </Arrow>
                 <DotsContainer>{renderedDots}</DotsContainer>
+                <Arrow onClick={() => handleArrowClick('next')}>
+                    <ArrowRightSVG />
+                </Arrow>
             </Overlay>
             <InnerContent>
                 <CarouselContent
