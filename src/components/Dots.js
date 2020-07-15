@@ -9,7 +9,8 @@ const Container = styled.div`
 
 const Dot = styled.div`
     background: white;
-    border: hsl(70, 10%, 40%) solid 2px;
+    border: ${(props) => (props.selected ? 'hsl(210, 60%, 37%)' : 'hsl(70, 10%, 40%)')}
+        solid 2px;
     border-radius: 50%;
     height: 1rem;
     width: 1rem;
@@ -21,7 +22,7 @@ const Dot = styled.div`
     }
 `;
 
-const Dots = ({ setAnimation, setPageCount, images, dimensions }) => {
+const Dots = ({ setAnimation, pageCount, setPageCount, images, dimensions }) => {
     const handleDotClick = (slideNumber) => {
         setAnimation((previousState) => ({
             ...previousState,
@@ -31,7 +32,13 @@ const Dots = ({ setAnimation, setPageCount, images, dimensions }) => {
     };
 
     const renderedDots = images.map((image, index) => {
-        return <Dot key={image + index} onClick={() => handleDotClick(index)} />;
+        return (
+            <Dot
+                key={image + index}
+                onClick={() => handleDotClick(index)}
+                selected={pageCount === index}
+            />
+        );
     });
 
     return <Container>{renderedDots}</Container>;
