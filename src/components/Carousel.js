@@ -93,6 +93,7 @@ const Carousel = ({ images }) => {
                 </ArrowButton>
                 <Dots
                     setAnimation={setAnimation}
+                    pageCount={pageCount}
                     setPageCount={setPageCount}
                     images={images}
                     dimensions={dimensions}
