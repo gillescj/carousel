@@ -27,7 +27,7 @@ const InnerContent = styled.div`
     grid-column: 1/-1;
 `;
 
-const Arrow = styled.button`
+const ArrowButton = styled.button`
     width: 100%;
     height: 100%;
     background: inherit;
@@ -63,7 +63,7 @@ const Carousel = ({ images }) => {
         }
     }, []);
 
-    const handleArrowClick = (direction) => {
+    const handleArrowButtonClick = (direction) => {
         if (
             (pageCount === 0 && direction === 'previous') ||
             (pageCount === maxPageCount && direction === 'next')
@@ -88,18 +88,18 @@ const Carousel = ({ images }) => {
     return (
         <Container ref={contentRef}>
             <Overlay>
-                <Arrow onClick={() => handleArrowClick('previous')}>
+                <ArrowButton onClick={() => handleArrowButtonClick('previous')}>
                     <ArrowLeftSVG />
-                </Arrow>
+                </ArrowButton>
                 <Dots
                     setAnimation={setAnimation}
                     setPageCount={setPageCount}
                     images={images}
                     dimensions={dimensions}
                 />
-                <Arrow onClick={() => handleArrowClick('next')}>
+                <ArrowButton onClick={() => handleArrowButtonClick('next')}>
                     <ArrowRightSVG />
-                </Arrow>
+                </ArrowButton>
             </Overlay>
             <InnerContent>
                 <CarouselContent
