@@ -100,7 +100,6 @@ const Carousel = ({ images }) => {
             <Overlay>
                 <Arrow onClick={() => handleArrowClick('previous')}>Previous</Arrow>
                 <Arrow onClick={() => handleArrowClick('next')}>Next</Arrow>
-                {pageCount}
                 <DotsContainer>{renderedDots}</DotsContainer>
             </Overlay>
             <InnerContent>
