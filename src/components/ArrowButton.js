@@ -26,13 +26,27 @@ const ArrowButton = ({
     maxPageCount,
 }) => {
     const handleArrowButtonClick = () => {
-        if (
-            (pageCount === 0 && direction === 'previous') ||
-            (pageCount === maxPageCount && direction === 'next')
-        ) {
-            console.log('fasdfasdf');
+        if (pageCount === 0 && direction === 'previous') {
+            setAnimation((previousState) => {
+                return {
+                    ...previousState,
+                    translate: dimensions.width * maxPageCount,
+                };
+            });
+            setPageCount(maxPageCount);
+
+            return;
+        } else if (pageCount === maxPageCount && direction === 'next') {
+            setAnimation((previousState) => {
+                return {
+                    ...previousState,
+                    translate: 0,
+                };
+            });
+            setPageCount(0);
             return;
         }
+
         const transitionValue =
             direction === 'previous' ? -dimensions.width : dimensions.width;
         setAnimation((previousState) => {
