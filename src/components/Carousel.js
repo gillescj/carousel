@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CarouselContent from './CarouselContent';
 import { ReactComponent as ArrowLeftSVG } from '../assets/svgs/arrow-left.svg';
 import { ReactComponent as ArrowRightSVG } from '../assets/svgs/arrow-right.svg';
+import Dots from './Dots';
 
 const Container = styled.div`
     display: grid;
@@ -37,26 +38,6 @@ const Arrow = styled.button`
     }
     svg {
         stroke: white;
-    }
-`;
-
-const DotsContainer = styled.div`
-    display: flex;
-    padding: 0.5rem;
-    align-self: end;
-`;
-
-const Dot = styled.div`
-    background: white;
-    border: hsl(70, 10%, 40%) solid 2px;
-    border-radius: 50%;
-    height: 1rem;
-    width: 1rem;
-    margin: 0.1rem;
-    cursor: pointer;
-    box-shadow: 0 2px 2px 0 hsla(206, 6%, 25%, 0.3);
-    &:hover {
-        background: hsl(190, 65%, 50%);
     }
 `;
 
@@ -104,25 +85,18 @@ const Carousel = ({ images }) => {
         });
     };
 
-    const handleDotClick = (slideNumber) => {
-        setAnimation((previousState) => ({
-            ...previousState,
-            translate: slideNumber * dimensions.width,
-        }));
-        setPageCount(slideNumber);
-    };
-
-    const renderedDots = images.map((image, index) => {
-        return <Dot key={image + index} onClick={() => handleDotClick(index)} />;
-    });
-
     return (
         <Container ref={contentRef}>
             <Overlay>
                 <Arrow onClick={() => handleArrowClick('previous')}>
                     <ArrowLeftSVG />
                 </Arrow>
-                <DotsContainer>{renderedDots}</DotsContainer>
+                <Dots
+                    setAnimation={setAnimation}
+                    setPageCount={setPageCount}
+                    images={images}
+                    dimensions={dimensions}
+                />
                 <Arrow onClick={() => handleArrowClick('next')}>
                     <ArrowRightSVG />
                 </Arrow>
