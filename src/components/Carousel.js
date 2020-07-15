@@ -1,9 +1,9 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import CarouselContent from './CarouselContent';
-import { ReactComponent as ArrowLeftSVG } from '../assets/svgs/arrow-left.svg';
-import { ReactComponent as ArrowRightSVG } from '../assets/svgs/arrow-right.svg';
+
 import Dots from './Dots';
+import ArrowButton from './ArrowButton';
 
 const Container = styled.div`
     display: grid;
@@ -25,20 +25,6 @@ const InnerContent = styled.div`
     z-index: 1;
     grid-row: 1 /-1;
     grid-column: 1/-1;
-`;
-
-const ArrowButton = styled.button`
-    width: 100%;
-    height: 100%;
-    background: inherit;
-    border: none;
-    cursor: pointer;
-    &:hover {
-        background: hsla(100, 5%, 20%, 30%);
-    }
-    svg {
-        stroke: white;
-    }
 `;
 
 const Carousel = ({ images }) => {
@@ -63,34 +49,17 @@ const Carousel = ({ images }) => {
         }
     }, []);
 
-    const handleArrowButtonClick = (direction) => {
-        if (
-            (pageCount === 0 && direction === 'previous') ||
-            (pageCount === maxPageCount && direction === 'next')
-        ) {
-            return;
-        }
-        const transitionValue =
-            direction === 'previous' ? -dimensions.width : dimensions.width;
-        setAnimation((previousState) => {
-            return {
-                ...previousState,
-                translate: previousState.translate + transitionValue,
-            };
-        });
-        setPageCount((previousPageCount) => {
-            return direction === 'previous'
-                ? previousPageCount - 1
-                : previousPageCount + 1;
-        });
-    };
-
     return (
         <Container ref={contentRef}>
             <Overlay>
-                <ArrowButton onClick={() => handleArrowButtonClick('previous')}>
-                    <ArrowLeftSVG />
-                </ArrowButton>
+                <ArrowButton
+                    direction="previous"
+                    setAnimation={setAnimation}
+                    pageCount={pageCount}
+                    setPageCount={setPageCount}
+                    dimensions={dimensions}
+                    maxPageCount={maxPageCount}
+                />
                 <Dots
                     setAnimation={setAnimation}
                     pageCount={pageCount}
@@ -98,9 +67,14 @@ const Carousel = ({ images }) => {
                     images={images}
                     dimensions={dimensions}
                 />
-                <ArrowButton onClick={() => handleArrowButtonClick('next')}>
-                    <ArrowRightSVG />
-                </ArrowButton>
+                <ArrowButton
+                    direction="next"
+                    setAnimation={setAnimation}
+                    pageCount={pageCount}
+                    setPageCount={setPageCount}
+                    dimensions={dimensions}
+                    maxPageCount={maxPageCount}
+                />
             </Overlay>
             <InnerContent>
                 <CarouselContent
