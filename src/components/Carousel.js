@@ -1,9 +1,9 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import CarouselContent from './CarouselContent';
-
 import Dots from './Dots';
 import ArrowButton from './ArrowButton';
+import useInterval from '../hooks/useInterval';
 
 const Container = styled.div`
     display: grid;
@@ -27,7 +27,7 @@ const InnerContent = styled.div`
     grid-column: 1/-1;
 `;
 
-const Carousel = ({ images }) => {
+const Carousel = ({ images, autoPlay = true, autoPlayDelay = 8000 }) => {
     const contentRef = useRef(null);
     const [animation, setAnimation] = useState({
         translate: 0,
@@ -35,6 +35,8 @@ const Carousel = ({ images }) => {
     });
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [pageCount, setPageCount] = useState(0);
+    const [delay, setDelay] = useState(autoPlayDelay);
+    const [isRunning, setIsRunning] = useState(autoPlay);
 
     const { translate, transition } = animation;
     const maxPageCount = images.length - 1;
@@ -49,7 +51,8 @@ const Carousel = ({ images }) => {
         }
     }, []);
 
-    const changePage = (changeTo) => {
+    const changePage = (changeTo, stopAutoPlay = false) => {
+        if (stopAutoPlay) setIsRunning(false);
         if (changeTo === 'previous' || changeTo === 'next') {
             let transitionValue;
             let pageValue;
@@ -86,6 +89,13 @@ const Carousel = ({ images }) => {
             setPageCount(changeTo);
         }
     };
+
+    useInterval(
+        () => {
+            changePage('next');
+        },
+        isRunning ? delay : null
+    );
 
     return (
         <Container ref={contentRef}>

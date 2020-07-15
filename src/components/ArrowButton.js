@@ -20,9 +20,9 @@ const Container = styled.button`
 const ArrowButton = ({ direction, changePage }) => {
     const handleArrowButtonClick = () => {
         if (direction === 'previous') {
-            changePage('previous');
+            changePage('previous', true);
         } else if (direction === 'next') {
-            changePage('next');
+            changePage('next', true);
         }
     };
     return (

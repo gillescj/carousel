@@ -24,7 +24,7 @@ const Dot = styled.div`
 
 const Dots = ({ pageCount, images, changePage }) => {
     const handleDotClick = (slideNumber) => {
-        changePage(slideNumber);
+        changePage(slideNumber, true);
     };
 
     const renderedDots = images.map((image, index) => {
