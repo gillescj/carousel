@@ -17,43 +17,13 @@ const Container = styled.button`
     }
 `;
 
-const ArrowButton = ({
-    direction,
-
-    pageCount,
-
-    maxPageCount,
-    changePage,
-}) => {
+const ArrowButton = ({ direction, changePage }) => {
     const handleArrowButtonClick = () => {
-        if (pageCount === 0 && direction === 'previous') {
-            changePage(maxPageCount);
-
-            return;
-        } else if (pageCount === maxPageCount && direction === 'next') {
-            changePage(0);
-
-            return;
-        }
         if (direction === 'previous') {
             changePage('previous');
         } else if (direction === 'next') {
             changePage('next');
         }
-
-        // const transitionValue =
-        //     direction === 'previous' ? -dimensions.width : dimensions.width;
-        // setAnimation((previousState) => {
-        //     return {
-        //         ...previousState,
-        //         translate: previousState.translate + transitionValue,
-        //     };
-        // });
-        // setPageCount((previousPageCount) => {
-        //     return direction === 'previous'
-        //         ? previousPageCount - 1
-        //         : previousPageCount + 1;
-        // });
     };
     return (
         <Container onClick={() => handleArrowButtonClick()}>

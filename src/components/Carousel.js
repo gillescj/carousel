@@ -53,10 +53,19 @@ const Carousel = ({ images }) => {
         if (changeTo === 'previous' || changeTo === 'next') {
             let transitionValue;
             let pageValue;
+
             if (changeTo === 'previous') {
+                if (pageCount === 0) {
+                    changePage(maxPageCount);
+                    return;
+                }
                 transitionValue = -dimensions.width;
                 pageValue = -1;
             } else if (changeTo === 'next') {
+                if (pageCount === maxPageCount) {
+                    changePage(0);
+                    return;
+                }
                 transitionValue = dimensions.width;
                 pageValue = +1;
             }
