@@ -22,13 +22,9 @@ const Dot = styled.div`
     }
 `;
 
-const Dots = ({ setAnimation, pageCount, setPageCount, images, dimensions }) => {
+const Dots = ({ pageCount, images, changePage }) => {
     const handleDotClick = (slideNumber) => {
-        setAnimation((previousState) => ({
-            ...previousState,
-            translate: slideNumber * dimensions.width,
-        }));
-        setPageCount(slideNumber);
+        changePage(slideNumber);
     };
 
     const renderedDots = images.map((image, index) => {

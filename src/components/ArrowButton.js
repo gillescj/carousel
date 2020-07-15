@@ -19,47 +19,41 @@ const Container = styled.button`
 
 const ArrowButton = ({
     direction,
-    setAnimation,
+
     pageCount,
-    setPageCount,
-    dimensions,
+
     maxPageCount,
+    changePage,
 }) => {
     const handleArrowButtonClick = () => {
         if (pageCount === 0 && direction === 'previous') {
-            setAnimation((previousState) => {
-                return {
-                    ...previousState,
-                    translate: dimensions.width * maxPageCount,
-                };
-            });
-            setPageCount(maxPageCount);
+            changePage(maxPageCount);
 
             return;
         } else if (pageCount === maxPageCount && direction === 'next') {
-            setAnimation((previousState) => {
-                return {
-                    ...previousState,
-                    translate: 0,
-                };
-            });
-            setPageCount(0);
+            changePage(0);
+
             return;
         }
+        if (direction === 'previous') {
+            changePage('previous');
+        } else if (direction === 'next') {
+            changePage('next');
+        }
 
-        const transitionValue =
-            direction === 'previous' ? -dimensions.width : dimensions.width;
-        setAnimation((previousState) => {
-            return {
-                ...previousState,
-                translate: previousState.translate + transitionValue,
-            };
-        });
-        setPageCount((previousPageCount) => {
-            return direction === 'previous'
-                ? previousPageCount - 1
-                : previousPageCount + 1;
-        });
+        // const transitionValue =
+        //     direction === 'previous' ? -dimensions.width : dimensions.width;
+        // setAnimation((previousState) => {
+        //     return {
+        //         ...previousState,
+        //         translate: previousState.translate + transitionValue,
+        //     };
+        // });
+        // setPageCount((previousPageCount) => {
+        //     return direction === 'previous'
+        //         ? previousPageCount - 1
+        //         : previousPageCount + 1;
+        // });
     };
     return (
         <Container onClick={() => handleArrowButtonClick()}>

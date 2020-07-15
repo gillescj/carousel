@@ -49,31 +49,50 @@ const Carousel = ({ images }) => {
         }
     }, []);
 
+    const changePage = (changeTo) => {
+        if (changeTo === 'previous' || changeTo === 'next') {
+            let transitionValue;
+            let pageValue;
+            if (changeTo === 'previous') {
+                transitionValue = -dimensions.width;
+                pageValue = -1;
+            } else if (changeTo === 'next') {
+                transitionValue = dimensions.width;
+                pageValue = +1;
+            }
+            setAnimation((previousState) => {
+                return {
+                    ...previousState,
+                    translate: previousState.translate + transitionValue,
+                };
+            });
+            setPageCount((previousPageCount) => {
+                return previousPageCount + pageValue;
+            });
+        } else if (typeof changeTo === 'number') {
+            setAnimation((previousState) => ({
+                ...previousState,
+                translate: changeTo * dimensions.width,
+            }));
+            setPageCount(changeTo);
+        }
+    };
+
     return (
         <Container ref={contentRef}>
             <Overlay>
                 <ArrowButton
                     direction="previous"
-                    setAnimation={setAnimation}
                     pageCount={pageCount}
-                    setPageCount={setPageCount}
-                    dimensions={dimensions}
                     maxPageCount={maxPageCount}
+                    changePage={changePage}
                 />
-                <Dots
-                    setAnimation={setAnimation}
-                    pageCount={pageCount}
-                    setPageCount={setPageCount}
-                    images={images}
-                    dimensions={dimensions}
-                />
+                <Dots pageCount={pageCount} images={images} changePage={changePage} />
                 <ArrowButton
                     direction="next"
-                    setAnimation={setAnimation}
                     pageCount={pageCount}
-                    setPageCount={setPageCount}
-                    dimensions={dimensions}
                     maxPageCount={maxPageCount}
+                    changePage={changePage}
                 />
             </Overlay>
             <InnerContent>
