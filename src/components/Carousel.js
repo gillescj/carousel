@@ -4,11 +4,12 @@ import CarouselContent from './CarouselContent';
 import Dots from './Dots';
 import ArrowButton from './ArrowButton';
 import useInterval from '../hooks/useInterval';
+import useWindowSize from '../hooks/useWindowSize';
 
 const Container = styled.div`
     display: grid;
     height: 30rem;
-    width: 40rem;
+    width: 100%;
     overflow: hidden;
 `;
 
@@ -37,6 +38,7 @@ const Carousel = ({ images, autoPlay = true, autoPlayDelay = 8000 }) => {
     const [pageCount, setPageCount] = useState(0);
     const [delay] = useState(autoPlayDelay);
     const [isRunning, setIsRunning] = useState(autoPlay);
+    const { height: windowHeight, width: windowWidth } = useWindowSize();
 
     const { translate, transition } = animation;
     const maxPageCount = images.length - 1;
@@ -44,11 +46,12 @@ const Carousel = ({ images, autoPlay = true, autoPlayDelay = 8000 }) => {
     useLayoutEffect(() => {
         if (contentRef.current) {
             setDimensions({
-                width: contentRef.current.offsetWidth,
-                height: contentRef.current.offsetHeight,
+                width: windowWidth,
+                height: windowHeight,
             });
+            changePage(0);
         }
-    }, []);
+    }, [windowWidth, windowHeight]);
 
     const changePage = (changeTo, stopAutoPlay = false) => {
         if (stopAutoPlay) setIsRunning(false);
