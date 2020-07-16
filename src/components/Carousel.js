@@ -35,7 +35,7 @@ const Carousel = ({ images, autoPlay = true, autoPlayDelay = 8000 }) => {
     });
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [pageCount, setPageCount] = useState(0);
-    const [delay, setDelay] = useState(autoPlayDelay);
+    const [delay] = useState(autoPlayDelay);
     const [isRunning, setIsRunning] = useState(autoPlay);
 
     const { translate, transition } = animation;
