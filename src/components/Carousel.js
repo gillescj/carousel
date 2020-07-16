@@ -47,7 +47,6 @@ const Carousel = ({ images, autoPlay = true, autoPlayDelay = 8000 }) => {
                 width: contentRef.current.offsetWidth,
                 height: contentRef.current.offsetHeight,
             });
-            console.log(contentRef.current.offsetWidth, contentRef.current.offsetHeight);
         }
     }, []);
 
