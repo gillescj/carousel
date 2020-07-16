@@ -19,7 +19,7 @@ const Overlay = styled.div`
     z-index: 2;
     grid-row: 1 /-1;
     grid-column: 1/-1;
-    grid-template-columns: 10% auto 10%;
+    grid-template-columns: minmax(10%, 3rem) auto minmax(10%, 3rem);
 `;
 
 const InnerContent = styled.div`
