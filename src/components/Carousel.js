@@ -42,14 +42,6 @@ const Carousel = ({ images, autoPlay = true, autoPlayDelay = 8000 }) => {
     const { translate, transition } = animation;
     const maxPageCount = images.length - 1;
 
-    useLayoutEffect(() => {
-        setDimensions({
-            width: windowWidth,
-            height: windowHeight,
-        });
-        changePage(0);
-    }, [windowWidth, windowHeight]);
-
     const changePage = (changeTo, stopAutoPlay = false) => {
         if (stopAutoPlay) setIsRunning(false);
         if (changeTo === 'previous' || changeTo === 'next') {
@@ -88,6 +80,15 @@ const Carousel = ({ images, autoPlay = true, autoPlayDelay = 8000 }) => {
             setPageCount(changeTo);
         }
     };
+
+    useLayoutEffect(() => {
+        setDimensions({
+            width: windowWidth,
+            height: windowHeight,
+        });
+        changePage(0);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [windowWidth, windowHeight]);
 
     useInterval(
         () => {
