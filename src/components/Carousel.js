@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import CarouselContent from './CarouselContent';
 import Dots from './Dots';
@@ -29,7 +29,6 @@ const InnerContent = styled.div`
 `;
 
 const Carousel = ({ images, autoPlay = true, autoPlayDelay = 8000 }) => {
-    const contentRef = useRef(null);
     const [animation, setAnimation] = useState({
         translate: 0,
         transition: 0.45,
@@ -44,13 +43,11 @@ const Carousel = ({ images, autoPlay = true, autoPlayDelay = 8000 }) => {
     const maxPageCount = images.length - 1;
 
     useLayoutEffect(() => {
-        if (contentRef.current) {
-            setDimensions({
-                width: windowWidth,
-                height: windowHeight,
-            });
-            changePage(0);
-        }
+        setDimensions({
+            width: windowWidth,
+            height: windowHeight,
+        });
+        changePage(0);
     }, [windowWidth, windowHeight]);
 
     const changePage = (changeTo, stopAutoPlay = false) => {
@@ -100,7 +97,7 @@ const Carousel = ({ images, autoPlay = true, autoPlayDelay = 8000 }) => {
     );
 
     return (
-        <Container ref={contentRef}>
+        <Container>
             <Overlay>
                 <ArrowButton
                     direction="previous"
